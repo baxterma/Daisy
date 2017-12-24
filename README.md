@@ -511,3 +511,7 @@ Add the following to your Cartfile:
 ```
 github "baxterma/Daisy" ~> 1.0
 ```
+
+## Acknowledgements
+
+Daisy was inspired by [PromiseKit](https://github.com/mxcl/PromiseKit), and `Operation` in Foundation.
