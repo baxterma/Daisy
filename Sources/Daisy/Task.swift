@@ -109,7 +109,7 @@ open class Task<Input, Output> {
     private let promise = Promise<Output>()
     
     /// The future representing the execution of the receiver.
-    public var future: Future<Output> { return promise.future }
+    final public var future: Future<Output> { return promise.future }
     
     // not sync-ed as its private to task, and we're sure to sync all setting and getting
     fileprivate var state: TaskState<Output> = .pending {
