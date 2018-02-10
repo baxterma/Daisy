@@ -96,12 +96,14 @@ private enum TaskState<Output> {
 /// arguments, making them very easy to work with. The one limitation of using a
 /// cancellation pool is that you cannot cancel a task with an indirect error.
 ///
-/// To support cancellation in your task subclasses (it is recommended that you do),
-/// you should regularly check the value of `isCancelled`. If `isCancelled` is ever
-/// `true`, your task should stop executing immediately, without calling either
-/// `complete(with:)`, or `fail(with:)` (or `cancel(with:)`, for that matter). If your
-/// task triggers some other asynchronous work, you can override the `wasCancelled(with:)`
-/// method, and ask said asynchronous work to stop.
+/// To respond to cancellation in your task subclasses you should regularly check the
+/// value of `isCancelled`. If `isCancelled` is ever `true`, your task should stop
+/// executing immediately, without calling either `complete(with:)`, or `fail(with:)`
+/// (or `cancel(with:)`, for that matter). Calling any of these methods after a task has
+/// been cancelled will result in a warning being printed, but will not alter the state
+/// of the task (it will remain cancelled). If your task triggers some other asynchronous
+/// work, you can override the `wasCancelled(with:)` method, and ask said asynchronous work
+/// to stop.
 open class Task<Input, Output> {
     
     fileprivate let internalQueue = DispatchQueue(label: "com.Daisy.TaskInternalQueue")
