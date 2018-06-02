@@ -40,7 +40,7 @@ public extension Future {
     /// receiver is resolved.
     ///
     /// - parameter queue: The queue to start `task` on. Defaults to the global
-    /// background queue.
+    /// utility queue.
     /// - parameter task: The task to always start when the receiver is resolved,
     /// irrespective of its resolved state.
     ///
@@ -48,7 +48,7 @@ public extension Future {
     /// receiver is resolved at some point, the returned future is guarenteed to be
     /// eventually resolved too.
     @discardableResult
-    public func always(on queue: DispatchQueue = .global(qos: .background), execute task: Task<Void, Void>) -> Future<Void> {
+    public func always(on queue: DispatchQueue = .global(qos: .utility), execute task: Task<Void, Void>) -> Future<Void> {
         
         task.setEnqueued()
         

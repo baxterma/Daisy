@@ -25,7 +25,7 @@ public extension Future {
     ///
     /// - parameter task: The task to be started after the receiver is fulfilled.
     /// - parameter queue: The queue to start `task` on if the receiver is fulfilled.
-    /// Defaults to the global background queue.
+    /// Defaults to the global utility queue.
     /// - parameter cancellationPool: The cancellation pool to add `task` to. Defaults to
     /// `nil`. If a cancellation pool is specified, `task` will be added to it as soon as this
     /// method is called, irrespective of the resolved state of the receiver.
@@ -37,7 +37,7 @@ public extension Future {
     /// successfully, the returned future will be fulfilled with both results.
     @discardableResult
     public func additionally<Output>(_ task: Task<Result, Output>,
-                                     on queue: DispatchQueue = .global(qos: .background),
+                                     on queue: DispatchQueue = .global(qos: .utility),
                                      using cancellationPool: CancellationPool? = nil) -> Future<(Result, Output)> {
         
         task.setEnqueued()

@@ -24,7 +24,7 @@ public extension Future {
     ///
     /// - parameter task: The task to be started after the receiver is fulfilled.
     /// - parameter queue: The queue to start `task` on if the receiver is fulfilled.
-    /// Defaults to the global background queue.
+    /// Defaults to the global utility queue.
     /// - parameter cancellationPool: The cancellation pool to add `task` to. Defaults to
     /// `nil`. If a CancellationPool is specified, `task` will be added to it as soon as this
     /// method is called, irrespective of the resolved state of the receiver.
@@ -37,7 +37,7 @@ public extension Future {
     /// is not fulfilled.
     @discardableResult
     public func then<Output>(_ task: Task<Result, Output>,
-                             on queue: DispatchQueue = .global(qos: .background),
+                             on queue: DispatchQueue = .global(qos: .utility),
                              using cancellationPool: CancellationPool? = nil) -> Future<Output> {
         
         task.setEnqueued()
@@ -201,7 +201,7 @@ public extension Future {
     ///
     /// - parameter tasks: The tasks to be started concurrently after the receiver is fulfilled.
     /// - parameter queue: The queue to start `tasks` on if the receiver is fulfilled.
-    /// Defaults to the global background queue.
+    /// Defaults to the global utility queue.
     /// - parameter cancellationPool: The cancellation pool to add the contents of`tasks` to. 
     /// Defaults to `nil`. If a CancellationPool is specified, the contents of `tasks` will be 
     /// added to it as soon as this method is called, irrespective of the resolved state of the receiver.
@@ -214,7 +214,7 @@ public extension Future {
     /// indirect error if there is one). In both cases, **no** tasks from `tasks` will be started.
     @discardableResult
     public func then<Output>(_ tasks: [Task<Result, Output>],
-                             on queue: DispatchQueue = .global(qos: .background),
+                             on queue: DispatchQueue = .global(qos: .utility),
                              using cancellationPool: CancellationPool? = nil) -> Future<[Output]> {
         
         tasks.forEach { $0.setEnqueued() }
