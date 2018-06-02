@@ -84,7 +84,7 @@ public final class CancellationPool {
         
         internalQueue.sync {
             
-            pool.flatMap { $0() }
+            pool.compactMap { $0() }
                 .forEach { $0.attemptCancel() }
             
             pool.removeAll()

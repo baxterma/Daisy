@@ -71,7 +71,7 @@ public extension Future {
             
             guard !groupPromise.isResolved else { return }
             
-            let fulfilledOutput = output.flatMap { $0 }
+            let fulfilledOutput = output.compactMap { $0 }
             
             // if groupPromise is not resolved, the only thing we can do here is
             // fulfil it. If we don't have the number of fulfilled results we were

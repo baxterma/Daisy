@@ -150,7 +150,7 @@ To start a `Task`, it is recommended that you use `Daisy.start`. You can use the
 
 Daisy provides a series of functions on `Future` that let you chain work together, allowing you to have data pass from one piece of work to another, without descending into multiple layers of nested callbacks. 
 
-Any chaining function that takes a closure will, by default, execute that closure on the main queue. Any chaining function that takes a `Task` will, by default, execute that task on the global background queue. Both behaviours can be customised by passing a different queue for the `queue` parameter on the chaining functions.
+Any chaining function that takes a closure will, by default, execute that closure on the main queue. Any chaining function that takes a `Task` will, by default, execute that task on the global utility queue. Both behaviours can be customised by passing a different queue for the `queue` parameter on the chaining functions.
 
 Every time you use a chaining function in Daisy, you are creating a new future (which the chaining function returns), and Daisy is managing the promise that will resolve that future. Each section of a chain in Daisy takes the result of the previous future in the chain (the future you're chaining onto) as input. This input can be passed as an argument to a closure, or as the input to a `Task`. When you chain work in Daisy, you are enqueueing work to be executed when the future you're chaining on to fulfils.
 
@@ -182,7 +182,7 @@ start(running: DataDownloadTask(), with: profileURL)
 #### Task `then`
 
 ```swift
-func then<Output>(_ task: Task<Result, Output>, on queue: DispatchQueue = .global(qos: .background), using cancellationPool: CancellationPool? = nil) -> Future<Output>
+func then<Output>(_ task: Task<Result, Output>, on queue: DispatchQueue = .global(qos: .utility), using cancellationPool: CancellationPool? = nil) -> Future<Output>
 ```
 
 Takes the result of the receiving future, and passes it to `task` as its input. The returned future will resolve to the same state as `task` (it is the task's future).
@@ -227,7 +227,7 @@ start(running: DataDownloadTask(), with: profileURL)
 #### Task Group `then`
 
 ```swift
-func then<Output>(_ tasks: [Task<Result, Output>], on queue: DispatchQueue = .global(qos: .background), using cancellationPool: CancellationPool? = nil) -> Future<[Output]>
+func then<Output>(_ tasks: [Task<Result, Output>], on queue: DispatchQueue = .global(qos: .utility), using cancellationPool: CancellationPool? = nil) -> Future<[Output]>
 ```
 
 Takes the result of the receiving future, and passes it to each task in `tasks` as their input. The returned future will either fulfil with an array of the combined output of `tasks`, or reject or cancel if any task in `tasks` fails or is cancelled.
@@ -274,7 +274,7 @@ fetchHeroImage()
 #### Task `additionally`
 
 ```swift 
-func additionally<Output>(_ task: Task<Result, Output>, on queue: DispatchQueue = .global(qos: .background), using cancellationPool: CancellationPool? = nil) -> Future<(Result, Output)>
+func additionally<Output>(_ task: Task<Result, Output>, on queue: DispatchQueue = .global(qos: .utility), using cancellationPool: CancellationPool? = nil) -> Future<(Result, Output)>
 ```
 
 Takes the result of the receiving future and passes it to `task` as its input. If `task` finishes successfully, the returned future will be fulfilled with a tuple containing the output of `task`, and the original result of the receiving future. Otherwise, the returned future will resolve to the same state as `task`.
@@ -463,7 +463,7 @@ start(running: DataDownloadTask(), with: profileURL)
 #### Task `always`
 
 ```swift
-func always(on queue: DispatchQueue = .global(qos: .background), execute task: Task<Void, Void>) -> Future<Void>
+func always(on queue: DispatchQueue = .global(qos: .utility), execute task: Task<Void, Void>) -> Future<Void>
 ```
 
 Executes `task` when the receiver is resolved.

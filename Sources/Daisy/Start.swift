@@ -18,7 +18,7 @@ import Dispatch
 /// - parameter task: The task to start running with `input` on `queue`.
 /// - parameter input: The input to start `task` with.
 /// - parameter queue: The queue to start running `task` on. Defaults to
-/// the global background queue.
+/// the global utility queue.
 /// - parameter cancellationPool: The cancellation pool to add `task` to. Defaults
 /// to `nil`.
 ///
@@ -26,7 +26,7 @@ import Dispatch
 @discardableResult
 public func start<Input, Output>(running task: Task<Input, Output>,
                                  with input: Input,
-                                 on queue: DispatchQueue = .global(qos: .background),
+                                 on queue: DispatchQueue = .global(qos: .utility),
                                  using cancellationPool: CancellationPool? = nil) -> Future<Output> {
     
     task.setEnqueued()
@@ -46,14 +46,14 @@ public func start<Input, Output>(running task: Task<Input, Output>,
 /// - parameter task: The task (which takes no input) to start running
 /// on `queue`.
 /// - parameter queue: The queue to start running `task` on. Defaults to
-/// the global background queue.
+/// the global utility queue.
 /// - parameter cancellationPool: The cancellation pool to add `task` to. Defaults
 /// to `nil`.
 ///
 /// - returns: A future representing the finished state of `task`.
 @discardableResult
 public func start<Output>(running task: Task<Void, Output>,
-                          on queue: DispatchQueue = .global(qos: .background),
+                          on queue: DispatchQueue = .global(qos: .utility),
                           using cancellationPool: CancellationPool? = nil) -> Future<Output> {
     
     return start(running: task, with: (), on: queue, using: cancellationPool)
@@ -64,14 +64,14 @@ public func start<Output>(running task: Task<Void, Output>,
 /// - note: `closure` will only be called once per call to this method.
 ///
 /// - parameter queue: The queue to start running `task` on. Defaults to
-/// the global background queue.
+/// the global utility queue.
 /// - parameter closure: The closure to start running on `queue`. If `closure`
 /// encounters a problem that prevents it from continuing, it should `throw` a
 /// suitable error.
 ///
 /// - returns: A future representing the finished state of `closure`.
 @discardableResult
-public func start<Output>(on queue: DispatchQueue = .global(qos: .background),
+public func start<Output>(on queue: DispatchQueue = .global(qos: .utility),
                           executing closure: @escaping () throws -> Output) -> Future<Output> {
     
     let promise = Promise<Output>()
@@ -115,7 +115,7 @@ public func start<Output>(on queue: DispatchQueue = .global(qos: .background),
 @discardableResult
 func _execute<Input, Output>(group tasks: [Task<Input, Output>],
                              with input: Input,
-                             on queue: DispatchQueue = .global(qos: .background)) -> Future<[Output]> {
+                             on queue: DispatchQueue = .global(qos: .utility)) -> Future<[Output]> {
     
     // we don't want the returned future to resolve until we're sure all the tasks
     // have been cancelled (if they need to be)
@@ -173,7 +173,7 @@ func _execute<Input, Output>(group tasks: [Task<Input, Output>],
 /// - parameter tasks: The tasks that will be dispatched to `queue` using `input`.
 /// - parameter input: The input that will be used for all of the tasks in `tasks`.
 /// - parameter queue: The queue to start running `task` on. Defaults to the global
-/// background queue.
+/// utility queue.
 /// - parameter cancellationPool: The cancellation pool to add the contents of `tasks` to.
 /// Defaults to `nil`. If a CancellationPool is specified, the contents of `tasks` will be
 /// added to it as soon as this method is called.
@@ -184,7 +184,7 @@ func _execute<Input, Output>(group tasks: [Task<Input, Output>],
 @discardableResult
 public func start<Input, Output>(running tasks: [Task<Input, Output>],
                                  with input: Input,
-                                 on queue: DispatchQueue = .global(qos: .background),
+                                 on queue: DispatchQueue = .global(qos: .utility),
                                  using cancellationPool: CancellationPool? = nil) -> Future<[Output]> {
     
     tasks.forEach { $0.setEnqueued() }
