@@ -381,7 +381,7 @@ open class Task<Input, Output> {
 public extension Task {
     
     /// Returns `true` if the receiver is pending, otherwise returns `false`.
-    public final var isPending: Bool {
+    final var isPending: Bool {
         
         return internalQueue.sync {
             
@@ -395,7 +395,7 @@ public extension Task {
     /// If the receiver has been enqueued, it should only be started by the object that enqueued it.
     ///
     /// - seeAlso: `setEnqueued()`
-    public final var isEnqueued: Bool {
+    final var isEnqueued: Bool {
         
         return internalQueue.sync {
             
@@ -407,7 +407,7 @@ public extension Task {
     /// Returns `true` if the receiver is executing, otherwise returns `false`.
     ///
     /// A task should not be started if it is already executing.
-    public final var isExecuting: Bool {
+    final var isExecuting: Bool {
         
         return internalQueue.sync {
             
@@ -419,7 +419,7 @@ public extension Task {
     /// Returns `true` if the receiver is completed, otherwise returns `false`.
     ///
     /// A task should not be started, failed, cancelled, or completed if it is already completed.
-    public final var isCompleted: Bool {
+    final var isCompleted: Bool {
         
         return internalQueue.sync {
             
@@ -431,7 +431,7 @@ public extension Task {
     /// Returns `true` if the receiver has failed, otherwise returns `false`.
     ///
     /// A task should not be started, failed, cancelled, or completed if it has already failed.
-    public final var isFailed: Bool {
+    final var isFailed: Bool {
         
         return internalQueue.sync {
             
@@ -443,7 +443,7 @@ public extension Task {
     /// Returns `true` if the receiver has been cancelled, otherwise returns `false`.
     ///
     /// A task should not be started, failed, cancelled, or completed if it has already been cancelled.
-    public final var isCancelled: Bool {
+    final var isCancelled: Bool {
         
         return internalQueue.sync {
             
@@ -455,7 +455,7 @@ public extension Task {
     /// Returns `true` if the receiver is either completed, failed, or cancelled, otherwise returns `false`.
     ///
     /// A task should not be started, failed, cancelled, or completed if it is already finished.
-    public final var isFinished: Bool {
+    final var isFinished: Bool {
         
         return internalQueue.sync {
             
@@ -469,7 +469,7 @@ public extension Task {
     }
     
     /// Returns a string concisely describing the receiver's current state; useful for debugging.
-    public final var stateDescription: String {
+    final var stateDescription: String {
         
         return internalQueue.sync { String(describing: state) }
     }

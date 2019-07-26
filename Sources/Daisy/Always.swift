@@ -22,7 +22,7 @@ public extension Future {
     /// receiver is resolved at some point, the returned future is guarenteed to be
     /// eventually fulfilled (with `()`).
     @discardableResult
-    public func always(on queue: DispatchQueue = .main, execute closure: @escaping () -> Void) -> Future<Void> {
+    func always(on queue: DispatchQueue = .main, execute closure: @escaping () -> Void) -> Future<Void> {
         
         let promise = Promise<Void>()
         
@@ -48,7 +48,7 @@ public extension Future {
     /// receiver is resolved at some point, the returned future is guarenteed to be
     /// eventually resolved too.
     @discardableResult
-    public func always(on queue: DispatchQueue = .global(qos: .utility), execute task: Task<Void, Void>) -> Future<Void> {
+    func always(on queue: DispatchQueue = .global(qos: .utility), execute task: Task<Void, Void>) -> Future<Void> {
         
         task.setEnqueued()
         

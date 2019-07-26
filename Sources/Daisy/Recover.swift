@@ -41,7 +41,7 @@ public extension Future {
     /// is fulfilled, `includeIndirectErrors` is `false` and the receiver is cancelled
     /// with an indirect error, or `closure` fails to provide an alternative result.
     @discardableResult
-    public func recover(on queue: DispatchQueue = .main,
+    func recover(on queue: DispatchQueue = .main,
                         includingIndirectErrors includeIndirectErrors: Bool = true,
                         using closure: @escaping (_ error: Error) -> Result?) -> Future<Result> {
         
@@ -107,8 +107,8 @@ public extension Future {
     /// is fulfilled, or `includeIndirectErrors` is `false` and the receiver is cancelled
     /// with an indirect error.
     @discardableResult
-    public func recover(includingIndirectErrors includeIndirectErrors: Bool = true,
-                        using alternativeResult: @autoclosure @escaping () -> Result) -> Future<Result> {
+    func recover(includingIndirectErrors includeIndirectErrors: Bool = true,
+                 using alternativeResult: @autoclosure @escaping () -> Result) -> Future<Result> {
         
         return recover(on: .main, includingIndirectErrors: includeIndirectErrors, using: { _ in
             

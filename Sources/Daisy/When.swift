@@ -33,7 +33,7 @@ public extension Future {
     /// their results combined into an array. Should any of the supplied futures be
     /// rejected or cancelled, the first one to become so will cause the returned
     /// future to be *immediately* resolved to the same state (either rejected or cancelled).
-    public static func fulfillingWhen<R>(_ futures: [Future<R>]) -> Future<[R]> where Result == [R] {
+    static func fulfillingWhen<R>(_ futures: [Future<R>]) -> Future<[R]> where Result == [R] {
         
         let syncQueue = DispatchQueue(label: "com.Daisy.WhenSyncQueue")
         let group = DispatchGroup()
@@ -108,8 +108,8 @@ public extension Future {
     /// their results combined into a tuple. Should any of the supplied futures be
     /// rejected or cancelled, the first one to become so will cause the returned
     /// future to be *immediately* resolved to the same state (either rejected or cancelled).
-    public static func fulfillingWhen<R0, R1>(_ f0: Future<R0>,
-                                              _ f1: Future<R1>) -> Future<(R0, R1)> where Result == (R0, R1) {
+    static func fulfillingWhen<R0, R1>(_ f0: Future<R0>,
+                                       _ f1: Future<R1>) -> Future<(R0, R1)> where Result == (R0, R1) {
         
         return Future<[Any]>.fulfillingWhen([f0.toAny(), f1.toAny()])
         .then(on: whenQueue, execute: { (results) in
@@ -143,9 +143,9 @@ public extension Future {
     /// their results combined into a tuple. Should any of the supplied futures be
     /// rejected or cancelled, the first one to become so will cause the returned
     /// future to be *immediately* resolved to the same state (either rejected or cancelled).
-    public static func fulfillingWhen<R0, R1, R2>(_ f0: Future<R0>,
-                                                  _ f1: Future<R1>,
-                                                  _ f2: Future<R2>) -> Future<(R0, R1, R2)> where Result == (R0, R1, R2) {
+    static func fulfillingWhen<R0, R1, R2>(_ f0: Future<R0>,
+                                           _ f1: Future<R1>,
+                                           _ f2: Future<R2>) -> Future<(R0, R1, R2)> where Result == (R0, R1, R2) {
         
         return Future<[Any]>.fulfillingWhen([f0.toAny(), f1.toAny(), f2.toAny()])
         .then(on: whenQueue, execute: { (results) in
@@ -181,10 +181,10 @@ public extension Future {
     /// their results combined into a tuple. Should any of the supplied futures be
     /// rejected or cancelled, the first one to become so will cause the returned
     /// future to be *immediately* resolved to the same state (either rejected or cancelled).
-    public static func fulfillingWhen<R0, R1, R2, R3>(_ f0: Future<R0>,
-                                                      _ f1: Future<R1>,
-                                                      _ f2: Future<R2>,
-                                                      _ f3: Future<R3>) -> Future<(R0, R1, R2, R3)> where Result == (R0, R1, R2, R3) {
+    static func fulfillingWhen<R0, R1, R2, R3>(_ f0: Future<R0>,
+                                               _ f1: Future<R1>,
+                                               _ f2: Future<R2>,
+                                               _ f3: Future<R3>) -> Future<(R0, R1, R2, R3)> where Result == (R0, R1, R2, R3) {
         
         return Future<[Any]>.fulfillingWhen([f0.toAny(), f1.toAny(), f2.toAny(), f3.toAny()])
         .then(on: whenQueue, execute: { (results) in
@@ -222,11 +222,11 @@ public extension Future {
     /// their results combined into a tuple. Should any of the supplied futures be
     /// rejected or cancelled, the first one to become so will cause the returned
     /// future to be *immediately* resolved to the same state (either rejected or cancelled).
-    public static func fulfillingWhen<R0, R1, R2, R3, R4>(_ f0: Future<R0>,
-                                                          _ f1: Future<R1>,
-                                                          _ f2: Future<R2>,
-                                                          _ f3: Future<R3>,
-                                                          _ f4: Future<R4>) -> Future<(R0, R1, R2, R3, R4)> where Result == (R0, R1, R2, R3, R4) {
+    static func fulfillingWhen<R0, R1, R2, R3, R4>(_ f0: Future<R0>,
+                                                   _ f1: Future<R1>,
+                                                   _ f2: Future<R2>,
+                                                   _ f3: Future<R3>,
+                                                   _ f4: Future<R4>) -> Future<(R0, R1, R2, R3, R4)> where Result == (R0, R1, R2, R3, R4) {
         
         return Future<[Any]>.fulfillingWhen([f0.toAny(), f1.toAny(), f2.toAny(), f3.toAny(), f4.toAny()])
         .then(on: whenQueue, execute: { (results) -> (R0, R1, R2, R3, R4) in
@@ -272,12 +272,12 @@ public extension Future {
     /// their results combined into a tuple. Should any of the supplied futures be
     /// rejected or cancelled, the first one to become so will cause the returned
     /// future to be *immediately* resolved to the same state (either rejected or cancelled).
-    public static func fulfillingWhen<R0, R1, R2, R3, R4, R5>(_ f0: Future<R0>,
-                                                              _ f1: Future<R1>,
-                                                              _ f2: Future<R2>,
-                                                              _ f3: Future<R3>,
-                                                              _ f4: Future<R4>,
-                                                              _ f5: Future<R5>) -> Future<(R0, R1, R2, R3, R4, R5)> where Result == (R0, R1, R2, R3, R4, R5) {
+    static func fulfillingWhen<R0, R1, R2, R3, R4, R5>(_ f0: Future<R0>,
+                                                       _ f1: Future<R1>,
+                                                       _ f2: Future<R2>,
+                                                       _ f3: Future<R3>,
+                                                       _ f4: Future<R4>,
+                                                       _ f5: Future<R5>) -> Future<(R0, R1, R2, R3, R4, R5)> where Result == (R0, R1, R2, R3, R4, R5) {
         
         return Future<[Any]>.fulfillingWhen([f0.toAny(), f1.toAny(), f2.toAny(), f3.toAny(), f4.toAny(), f5.toAny()])
         .then(on: whenQueue, execute: { (results) -> (R0, R1, R2, R3, R4, R5) in

@@ -36,9 +36,9 @@ public extension Future {
     /// See the note above for the rules on how the returned future may be resolved if the receiver
     /// is not fulfilled.
     @discardableResult
-    public func then<Output>(_ task: Task<Result, Output>,
-                             on queue: DispatchQueue = .global(qos: .utility),
-                             using cancellationPool: CancellationPool? = nil) -> Future<Output> {
+    func then<Output>(_ task: Task<Result, Output>,
+                      on queue: DispatchQueue = .global(qos: .utility),
+                      using cancellationPool: CancellationPool? = nil) -> Future<Output> {
         
         task.setEnqueued()
         cancellationPool?.add(task)
@@ -82,7 +82,7 @@ public extension Future {
     /// - returns: A future either resolved based on the return value or thrown error of `closure`,
     /// or cancelled with an indirect error due to the receiver either being cancelled or rejected.
     @discardableResult
-    public func then<Output>(on queue: DispatchQueue = .main, execute closure: @escaping (_ input: Result) throws -> Output) -> Future<Output> {
+    func then<Output>(on queue: DispatchQueue = .main, execute closure: @escaping (_ input: Result) throws -> Output) -> Future<Output> {
         
         let promise = Promise<Output>()
         
@@ -133,7 +133,7 @@ public extension Future {
     /// by `closure`, or cancelled with an indirect error due to the receiver either being cancelled 
     /// or rejected.
     @discardableResult
-    public func then<Output>(on queue: DispatchQueue = .main, execute closure: @escaping (_ input: Result) -> Future<Output>) -> Future<Output> {
+    func then<Output>(on queue: DispatchQueue = .main, execute closure: @escaping (_ input: Result) -> Future<Output>) -> Future<Output> {
         
         let promise = Promise<Output>()
         
@@ -213,9 +213,9 @@ public extension Future {
     /// (with or without an indirect error), the returned future will be cancelled too (with the same 
     /// indirect error if there is one). In both cases, **no** tasks from `tasks` will be started.
     @discardableResult
-    public func then<Output>(_ tasks: [Task<Result, Output>],
-                             on queue: DispatchQueue = .global(qos: .utility),
-                             using cancellationPool: CancellationPool? = nil) -> Future<[Output]> {
+    func then<Output>(_ tasks: [Task<Result, Output>],
+                      on queue: DispatchQueue = .global(qos: .utility),
+                      using cancellationPool: CancellationPool? = nil) -> Future<[Output]> {
         
         tasks.forEach { $0.setEnqueued() }
         cancellationPool?.add(contentsOf: tasks)
