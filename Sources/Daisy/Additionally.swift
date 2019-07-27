@@ -36,9 +36,9 @@ public extension Future {
     /// future will be rejected or cancelled respectively. If the receiver is fulfilled, and `task` finishes
     /// successfully, the returned future will be fulfilled with both results.
     @discardableResult
-    public func additionally<Output>(_ task: Task<Result, Output>,
-                                     on queue: DispatchQueue = .global(qos: .utility),
-                                     using cancellationPool: CancellationPool? = nil) -> Future<(Result, Output)> {
+    func additionally<Output>(_ task: Task<Result, Output>,
+                              on queue: DispatchQueue = .global(qos: .utility),
+                              using cancellationPool: CancellationPool? = nil) -> Future<(Result, Output)> {
         
         task.setEnqueued()
         cancellationPool?.add(task)
@@ -93,7 +93,7 @@ public extension Future {
     /// the error thrown by `closure`. If the receiver is fulfilled, and `closure` returns a result, the
     /// returned future will be fulfilled with both results.
     @discardableResult
-    public func additionally<Output>(on queue: DispatchQueue = .main, execute closure: @escaping (Result) throws -> Output) -> Future<(Result, Output)> {
+    func additionally<Output>(on queue: DispatchQueue = .main, execute closure: @escaping (Result) throws -> Output) -> Future<(Result, Output)> {
         
         let promise = Promise<(Result, Output)>()
         
@@ -143,7 +143,7 @@ public extension Future {
     /// future will match the state of the future returned by `closure`. If both the receiver and the future
     /// returned by `closure` are fulfilled, the returned future will be fulfilled with both results.
     @discardableResult
-    public func additionally<Output>(on queue: DispatchQueue = .main, execute closure: @escaping (Result) -> Future<Output>) -> Future<(Result, Output)> {
+    func additionally<Output>(on queue: DispatchQueue = .main, execute closure: @escaping (Result) -> Future<Output>) -> Future<(Result, Output)> {
         
         let promise = Promise<(Result, Output)>()
         

@@ -31,9 +31,9 @@ public extension Future {
     /// or cancelled with will continue to propagate down a chain, even if `closure`
     /// is called.
     @discardableResult
-    public func `catch`(on queue: DispatchQueue = .main,
-                        includingIndirectErrors includeIndirectErrors: Bool = true,
-                        using closure: @escaping (_ error: Error) -> Void) -> Future<Result> {
+    func `catch`(on queue: DispatchQueue = .main,
+                 includingIndirectErrors includeIndirectErrors: Bool = true,
+                 using closure: @escaping (_ error: Error) -> Void) -> Future<Result> {
         
         if includeIndirectErrors {
             
